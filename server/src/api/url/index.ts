@@ -61,7 +61,7 @@ router.get(
     checkExpirationDate,
     async (req: Request, res: Response) => {
         let urlObject = req.urlObject!;
-        res.redirect(urlObject.redirectUrl);
+        res.status(200).json({ redirectUrl: urlObject.redirectUrl });
     }
 );
 

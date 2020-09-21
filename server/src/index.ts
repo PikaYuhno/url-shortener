@@ -3,10 +3,11 @@ import dotenv from "dotenv";
 import morgan from "morgan";
 import { createConnection, sequelize } from "./db/connection";
 import urlRouter from "./api/url";
+import cors from "cors";
 
 dotenv.config();
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 /**
  * TODO:
@@ -32,6 +33,7 @@ const connectionTest = async () => {
 
 connectionTest();
 
+app.use(cors());
 app.use(express.json());
 app.use(morgan("combined"));
 app.use("/api/url", urlRouter);
