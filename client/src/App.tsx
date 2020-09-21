@@ -4,7 +4,6 @@ import TextField from "@material-ui/core/TextField";
 import Grid from "@material-ui/core/Grid";
 import { Alert, AlertTitle } from "@material-ui/lab";
 import "./App.css";
-//Test comment
 
 function App() {
     const [url, setUrl] = useState("");
