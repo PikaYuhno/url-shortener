@@ -6,6 +6,5 @@ COPY . .
 RUN npm run build
 WORKDIR ./dist
 COPY .env .
-EXPOSE 81
 CMD node index.js
 
