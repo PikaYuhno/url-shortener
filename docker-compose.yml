@@ -1,0 +1,30 @@
+version: "3.7"
+
+services: 
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: postgres
+    volumes:
+      - './pgdata:/var/lib/postgresql/data'
+  
+  web: 
+    build: ./client
+    depends_on:
+      - db
+    ports:
+      - 80:80
+    volumes:
+      - './client:/usr/src/app'
+      - '/usr/src/app/node_modules'
+    stdin_open: true
+  api:
+    build: ./server
+    depends_on:
+      - web
+    ports:
+      - 81:4000

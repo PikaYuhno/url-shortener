@@ -4,17 +4,11 @@ import morgan from "morgan";
 import { createConnection, sequelize } from "./db/connection";
 import urlRouter from "./api/url";
 import cors from "cors";
+import { checkExistence, checkExpirationDate } from "./api/url/middlewares";
 
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 4000;
-
-/**
- * TODO:
- * + Add Vue.js
- *
- *
- */
 
 const connectionTest = async () => {
     let retries = 5;
@@ -36,6 +30,22 @@ connectionTest();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("combined"));
+app.use(express.static("public"));
+
 app.use("/api/url", urlRouter);
+
+//Middleware:
+// + check if name exists
+// + check wether it's expired or not
+app.get(
+    "/:name",
+    checkExistence,
+    checkExpirationDate,
+    async (req: Request, res: Response) => {
+        let urlObject = req.urlObject!;
+        console.log("Redirecting to:", urlObject.redirectUrl);
+        res.redirect(urlObject.redirectUrl);
+    }
+);
 
 app.listen(PORT, () => console.log(`Started Server on PORT: ${PORT}`));
