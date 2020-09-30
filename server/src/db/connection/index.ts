@@ -8,7 +8,7 @@ export const createConnection = (): Sequelize => {
         process.env.PG_USERNAME!,
         process.env.PG_PASSWORD!,
         {
-            host: "db",
+            host: process.env.PG_HOST,
             dialect: "postgres",
         }
     );
